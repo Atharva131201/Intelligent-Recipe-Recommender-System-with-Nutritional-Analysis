@@ -1,0 +1,84 @@
+<!-- templates/feedback.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        form {
+            margin-top: 20px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>OOPS! NO SUCH DISH FOUND</h1>
+    <p>Do you know this kind of dish? You can help us by filling out this short survey form, which can benefit others!</p>
+
+    <!-- Feedback form -->
+    <form method="post" action="/feedback">
+        <label for="title">Title: </label>
+        <input type="text" name="title" required>
+
+        <label for="ingredients">Ingredients: </label>
+        <textarea name="ingredients" rows="4" required></textarea>
+
+        <label for="cost">Cost: </label>
+        <input type="text" name="cost" required>
+
+        <label for="veg_non_veg">Veg/Non Veg: </label>
+        <input type="text" name="veg_non_veg" required>
+
+        <label for="time">Time: </label>
+        <input type="text" name="time" required>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

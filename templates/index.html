@@ -1,0 +1,138 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Recommender</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        form {
+            margin-top: 20px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        h2 {
+            color: #007bff;
+            margin-top: 40px;
+        }
+
+        .card {
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card img {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            max-height: 200px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Recipe Recommender</h1>
+
+    <!-- User input form -->
+    <form method="post">
+        <label for="ingredients">Enter ingredients (comma-separated): </label>
+        <input type="text" name="ingredients" required><br>
+
+        <label for="max_price">Enter max price: </label>
+        <input type="text" name="max_price" required><br>
+
+        <label for="dish_type">Enter dish type: </label>
+        <input type="text" name="dish_type" required><br>
+
+        <label for="is_vegetarian">Is it vegetarian? (yes/no): </label>
+        <input type="text" name="is_vegetarian" required><br>
+
+        <label for="max_minutes">Enter max minutes to prepare: </label>
+        <input type="text" name="max_minutes" required><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if top_recipe is not none and not top_recipe.empty %}
+        <h2>Top Recommended Recipe:</h2>
+        <div class="card" style="width: 18rem;">
+            <img src="{{ top_recipe['image'] }}" class="card-img-top" alt="{{ top_recipe['title'] }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ top_recipe['title'] }}</h5>
+                <p class="card-text">Calories: {{ top_recipe['calories'] }}</p>
+                <p class="card-text">Health Score: {{ top_recipe['healthScore'] }}</p>
+                <p class="card-text">Fat per gm: {{ top_recipe['Fat/g'] }}</p>
+                <p class="card-text">Sugar per gm: {{ top_recipe['Sugar/g'] }}</p>
+                <p class="card-text">Cholesterol per gm: {{ top_recipe['Cholesterol/mg'] }}</p>
+
+                <!-- Add other details as needed -->
+            </div>
+        </div>
+    {% endif %}
+
+    {% if content_recommendations is not none and not content_recommendations.empty %}
+        <h2>Content-Based Recommendations for the Top Recipe:</h2>
+        <div class="card-deck">
+            {% for recipe_title in content_recommendations %}
+                {% set recipe = df[df['title'] == recipe_title].iloc[0] %}
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ recipe['image'] }}" class="card-img-top" alt="{{ recipe['title'] }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ recipe['title'] }}</h5>
+                        <p class="card-text">Calories: {{ recipe['calories'] }}</p>
+                        <p class="card-text">Health Score: {{ recipe['healthScore'] }}</p>
+                        <p class="card-text">Percent Protein: {{ recipe['percentProtein'] }}</p>
+                        <p class="card-text">Fat per gm: {{ recipe['Fat/g'] }}</p>
+                        <p class="card-text">Sugar per gm: {{ recipe['Sugar/g'] }}</p>
+                        <p class="card-text">Cholesterol per gm: {{ recipe['Cholesterol/mg'] }}</p>
+                       
+                        <!-- Add other details as needed -->
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="mt-4">No content-based recommendations found.</p>
+    {% endif %}
+</body>
+</html>
